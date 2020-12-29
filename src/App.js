@@ -28,17 +28,16 @@ const getTimeDays = (time) => (time / daySeconds) | 0;
 
 export default function App() {
 
-  var dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
-  var dateNow = new Date();
+  const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
+  const dateNow = new Date();
 
-  var seconds = Math.floor((dateFuture - dateNow) / 1000);
+  const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
 
-  const remainingTime = seconds;
   const days = Math.ceil(remainingTime / daySeconds);
   const daysDuration = days * daySeconds;
 
   return (
-    <div className="outer">
+    <div className="App">
       <ParticlesBg color="random" type="tadpole" bg={true}/>
 
       <div className = "inner">
