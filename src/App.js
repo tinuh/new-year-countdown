@@ -52,7 +52,7 @@ export default function App() {
     <div className="App">
       {end ? 
         (
-          <Player autoPlay = {true}>
+          <Player autoPlay = {true} onLoad = {() => {this.play()}}>
             <source src = {countdown}/>
           </Player>
         ) : 
