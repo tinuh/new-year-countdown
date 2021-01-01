@@ -24,28 +24,35 @@ const renderTime = (dimension, time) => {
   );
 };
 
-const getTimeSeconds = (time) => (minuteSeconds - time / 1000) | 0;
-const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
-const getTimeHours = (time) => ((time % daySeconds) / hourSeconds) | 0;
-const getTimeDays = (time) => (time / daySeconds) | 0;
-
 export default function App() {
 
   const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
   const dateNow = new Date();
 
-  const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
+  //const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
+  const remainingTime = 15;
 
   const days = Math.ceil(remainingTime / daySeconds);
   const daysDuration = days * daySeconds;
 
-  const [end, setEnding] = React.useState(true);
+  const [end, setEnding] = React.useState(false);
+
+  const getTimeSeconds = (time) => {
+    let seconds = (minuteSeconds - time / 1000) | 0
+    if (seconds === 11){
+      setEnding(true);
+    }
+    return seconds;
+  }
+  const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
+  const getTimeHours = (time) => ((time % daySeconds) / hourSeconds) | 0;
+  const getTimeDays = (time) => (time / daySeconds) | 0;
 
   return (
     <div className="App">
       {end ? 
         (
-          <Player preload = "auto" autoPlay = {true}>
+          <Player autoPlay = {true}>
             <source src = {countdown}/>
           </Player>
         ) : 
