@@ -5,7 +5,7 @@ import ParticlesBg from "particles-bg";
 import { Player } from 'video-react';
 import countdown from "./countdown.mp4";
 import "./video.css";
-import { play } from 'video-react/lib/actions/player';
+//import { play } from 'video-react/lib/actions/player';
 
 const minuteSeconds = 60;
 const hourSeconds = 3600;
