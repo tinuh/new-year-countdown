@@ -4,6 +4,8 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import ParticlesBg from "particles-bg";
 import { Player } from 'video-react';
 import countdown from "./countdown.mp4";
+import "./video.css";
+import { play } from 'video-react/lib/actions/player';
 
 const minuteSeconds = 60;
 const hourSeconds = 3600;
@@ -26,40 +28,49 @@ const renderTime = (dimension, time) => {
 
 export default function App() {
 
-  //const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
-  //const dateNow = new Date();
+  const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
+  const dateNow = new Date();
 
-  //const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
-  const remainingTime = 15;
+  const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
+  //const remainingTime = 73;
 
   const days = Math.ceil(remainingTime / daySeconds);
   const daysDuration = days * daySeconds;
 
+  let reMinutes = remainingTime < 60
+
   const [end, setEnding] = React.useState(false);
+  const [minute, setMinute] = React.useState(reMinutes);
 
   const getTimeSeconds = (time) => {
     let seconds = (minuteSeconds - time / 1000) | 0
-    if (seconds === 11){
+    if (seconds === 11 && minute){
       setEnding(true);
     }
     return seconds;
   }
-  const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
+  const getTimeMinutes = (time) => {
+    let minutes = ((time % hourSeconds) / minuteSeconds) | 0;
+    if (minutes === 0) {
+      setMinute(true);
+    }
+    return minutes;
+  }
   const getTimeHours = (time) => ((time % daySeconds) / hourSeconds) | 0;
   const getTimeDays = (time) => (time / daySeconds) | 0;
 
   return (
     <div className="App">
-      {end ? 
+      {end ?
         (
-          <Player autoPlay = {true} onLoad = {() => {this.play()}}>
+          <Player autoPlay = {true}>
             <source src = {countdown}/>
           </Player>
         ) : 
         (<div>
-          <ParticlesBg color="random" type="tadpole" bg={true}/>
+          <ParticlesBg color="random" type="polygon" bg={true}/>
 
-          <h1 style = {{color: "rgb(192,192,192)", fontSize: "70px"}}>New Year's 2021</h1>
+          <h1 style = {{color: "rgb(192,192,192)", fontSize: "70px"}}>New Year's 2022</h1>
 
           <div className = "inner">
             <CountdownCircleTimer
