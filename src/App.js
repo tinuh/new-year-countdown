@@ -26,33 +26,35 @@ const renderTime = (dimension, time) => {
   );
 };
 
-export default function App() {
-
+export default function App(props) {
   const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
   const dateNow = new Date();
 
-  const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
-  //const remainingTime = 73;
-
-  const days = Math.ceil(remainingTime / daySeconds);
-  const daysDuration = days * daySeconds;
+  //const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
+  const remainingTime = 65;
+  const daysDuration = 365 * daySeconds;
 
   let reMinutes = remainingTime < 60
 
   const [end, setEnding] = React.useState(false);
   const [minute, setMinute] = React.useState(reMinutes);
+  const player = React.useRef(null);
 
   const getTimeSeconds = (time) => {
     let seconds = (minuteSeconds - time / 1000) | 0
-    if (seconds === 11 && minute){
-      setEnding(true);
-    }
+    //if (seconds === 59 && minute){
+    //  setEnding(true);
+    //  player.current.actions.play();
+    //}
     return seconds;
   }
   const getTimeMinutes = (time) => {
     let minutes = ((time % hourSeconds) / minuteSeconds) | 0;
     if (minutes === 0) {
-      setMinute(true);
+      //setMinute(true);
+      setEnding(true);
+      player.current.actions.play();
+      player.current.actions.toggleFullscreen();
     }
     return minutes;
   }
@@ -61,13 +63,14 @@ export default function App() {
 
   return (
     <div className="App">
-      {end ?
-        (
-          <Player autoPlay = {true}>
+
+        <div style = {{"display": end ? "block" : "none"}}>
+          <Player ref={player}>
             <source src = {countdown}/>
           </Player>
-        ) : 
-        (<div>
+        </div>
+
+        {!end && <div>
           <ParticlesBg color="random" type="polygon" bg={true}/>
 
           <h1 style = {{color: "rgb(192,192,192)", fontSize: "70px"}}>New Year's 2022</h1>
@@ -126,8 +129,7 @@ export default function App() {
               }
             </CountdownCircleTimer>
           </div>
-        </div>
-        )}
+        </div>}
     </div>
   );
 }
