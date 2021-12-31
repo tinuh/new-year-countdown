@@ -27,17 +27,17 @@ const renderTime = (dimension, time) => {
 };
 
 export default function App(props) {
-  const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
-  const dateNow = new Date();
+  //const dateFuture = new Date(new Date().getFullYear() + 1, 0, 1);
+  //const dateNow = new Date();
 
   //const remainingTime = Math.floor((dateFuture - dateNow) / 1000);
   const remainingTime = 65;
   const daysDuration = 365 * daySeconds;
 
-  let reMinutes = remainingTime < 60
+  //let reMinutes = remainingTime < 60
 
   const [end, setEnding] = React.useState(false);
-  const [minute, setMinute] = React.useState(reMinutes);
+  //const [minute, setMinute] = React.useState(reMinutes);
   const player = React.useRef(null);
 
   const getTimeSeconds = (time) => {
